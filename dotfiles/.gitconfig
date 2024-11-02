@@ -1,0 +1,86 @@
+[user]
+	initials = yn
+	name = Your Name
+	email = your.email@somewhere.com
+
+[color]
+	ui = auto
+	interactive = auto
+	status = auto
+	commit = auto
+	diff = auto
+	branch = auto
+[push]
+	default = simple
+
+[apply]
+whitespace = strip
+whitespace = nowarn
+
+
+[alias]
+	aa = add -A
+  amend = commit --amend --reset-author --reuse-message=HEAD
+  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+  br = branch
+  bra = branch -a
+	ci = commit -m
+  clear = !git add . && git stash && git stash drop
+	co = checkout
+  cp = cherry-pick
+  di = diff
+  diff-stat = diff -b --stat
+  gui = !sh -c '/usr/local/opt/git/bin/git gui'
+  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  log-graph = log --all --graph --decorate
+  log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
+  log-timeline = log --format='%h %an %ar - %s'
+  log-local = log --oneline origin..HEAD
+  log-fetched = log --oneline HEAD..origin/master
+  merged = branch --merged
+  oneline = log --oneline
+  p = pair
+  patch = log -p --no-walk # Generate patch file from a commit.
+  prune = remote prune
+  prune-all = !git remote | xargs -n 1 git remote prune
+  search = log --pretty=short -S
+  st = status
+  staged = diff --staged
+  stat = status
+  uncommit = reset --soft HEAD^
+  unmerge = reset --hard ORIG_HEAD
+  unmerged = branch --no-merged
+  unstage = reset HEAD --
+  wdiff = diff --word-diff-regex=[a-zA-Z_0-9]+
+  which-branches-contain = branch -a --contains
+  which-tags-contain = name-rev --name-only
+  wipe = !git reset --hard; git clean -fd
+  coh = checkout-history
+  cop = "!f() { git checkout @{$1}; }; f"
+  current-branch = rev-parse --abbrev-ref HEAD
+
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+
+[merge]
+	tool = fugitive
+
+[core]
+	excludesfile = ~/.gitignore
+	editor = vim
+
+[mergetool]
+	keepBackup = false
+
+[credential]
+	helper = cache --timeout=86400
+
+[rerere]
+	enabled = true
+
+[pull]
+	rebase = true
