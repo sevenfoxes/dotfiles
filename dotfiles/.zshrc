@@ -14,7 +14,6 @@ source ~/.theme
 antigen use oh-my-zsh
 antigen bundle StackExchange/blackbox
 antigen bundle brew
-antigen bundle command-not-found
 antigen bundle common-aliases
 antigen bundle docker
 antigen bundle docker-compose
