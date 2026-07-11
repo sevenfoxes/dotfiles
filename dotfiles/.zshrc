@@ -1,32 +1,31 @@
 ########################
-# Node
+# NVM
 ########################
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 
 ########################
-# Antigen
+# ZSH
 ########################
-source ~/antigen.zsh
-source ~/.theme
+autoload -Uz compinit && compinit
 
-antigen use oh-my-zsh
-antigen bundle StackExchange/blackbox
-antigen bundle brew
-antigen bundle common-aliases
-antigen bundle docker
-antigen bundle docker-compose
-antigen bundle git
-antigen bundle golang
-antigen bundle npm
-antigen bundle nvm
-antigen bundle lukechilds/zsh-nvm
-antigen bundle python
-antigen bundle tmux
-antigen bundle laggardkernel/zsh-thefuck
-antigen theme bhilburn/powerlevel9k powerlevel9k
-antigen apply
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 
-# Hermes Agent — ensure ~/.local/bin is on PATH
+# System plugins (installed via package manager)
+[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+########################
+# PATH
+########################
 export PATH="$HOME/.local/bin:$PATH"
+
+########################
+# Starship
+########################
+eval "$(starship init zsh)"

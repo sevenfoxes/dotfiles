@@ -1,0 +1,84 @@
+# Starship prompt — cross-shell (zsh, bash, powershell)
+# Mirrors the previous powerlevel9k layout:
+#   Left:  dir | git user initials | git branch + status
+#   Right: exit status | go | node | os
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$custom\
+$line_break\
+$character"""
+
+right_format = """
+$status\
+$golang\
+$nodejs\
+$os"""
+
+add_newline = true
+
+[character]
+success_symbol = "[❯](bold cyan)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+style = "bold bright-blue"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = "  "
+read_only_style = "bold red"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+modified = "[!](bold yellow)"
+staged = "[+](bold green)"
+untracked = "[?](bold green)"
+ahead = "[⇡${count}](bold cyan)"
+behind = "[⇣${count}](bold cyan)"
+diverged = "[⇕](bold yellow)"
+conflicted = "[⚡](bold red)"
+deleted = "[✘](bold red)"
+stashed = "[≡](bold blue)"
+format = "([$all_status$ahead_behind] )"
+
+# git config user.initials — matches the old custom_ssh segment
+[custom.git_user]
+command = "git config user.initials"
+when = "git rev-parse --is-inside-work-tree"
+style = "bold blue"
+format = "[$output]($style) "
+shell = ["sh", "-c"]
+
+[status]
+disabled = false
+style = "bold red"
+symbol = "✘ "
+format = "[$symbol$status]($style) "
+
+[golang]
+symbol = " "
+style = "bold cyan"
+format = "[$symbol($version)]($style) "
+
+[nodejs]
+symbol = " "
+style = "bold green"
+format = "[$symbol($version)]($style) "
+
+[os]
+disabled = false
+style = "bold white"
+
+[os.symbols]
+Ubuntu = " "
+Macos = " "
+Windows = " "
+Fedora = " "
+Alpine = " "

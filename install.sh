@@ -20,8 +20,10 @@ binaries=(
   unzip
   fontconfig
   zsh
-  tmux
   git-gui
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  ghostty
 )
 
 install_packages "${binaries[@]}"
@@ -30,19 +32,20 @@ echo "Symlinking dotfiles..."
 for file in "$SCRIPT_DIR"/dotfiles/.*; do
   name="$(basename "$file")"
   [[ "$name" == "." || "$name" == ".." || "$name" == ".git" ]] && continue
-  echo "  $name -> ~/$name"
-  ln -sf "$file" ~/
+
+  if [[ "$name" == ".config" ]]; then
+    # Symlink each item under .config individually to avoid clobbering ~/.config
+    mkdir -p "$HOME/.config"
+    for item in "$file"/*; do
+      item_name="$(basename "$item")"
+      echo "  .config/$item_name -> ~/.config/$item_name"
+      ln -sf "$item" "$HOME/.config/$item_name"
+    done
+  else
+    echo "  $name -> ~/$name"
+    ln -sf "$file" ~/
+  fi
 done
-
-echo "Installing antigen..."
-if [[ ! -f ~/antigen.zsh ]]; then
-  curl -fsSL https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh -o ~/antigen.zsh
-else
-  echo "  already installed, skipping"
-fi
-
-# hack for broken docker plugin
-mkdir -p ~/.antigen/bundles/robbyrussell/oh-my-zsh/cache/completions
 
 echo "Installing nvm (latest)..."
 if [[ ! -d "$HOME/.nvm" ]]; then
@@ -71,9 +74,9 @@ else
   echo "  already installed, skipping"
 fi
 
-echo "Installing tmux plugin manager..."
-if [[ ! -d ~/.tmux/plugins/tpm ]]; then
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "Installing starship..."
+if ! command -v starship &>/dev/null; then
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes
 else
   echo "  already installed, skipping"
 fi
@@ -107,4 +110,8 @@ else
   echo "  already using zsh, skipping"
 fi
 
-echo "Done! Restart your terminal to start using zsh."
+echo ""
+echo "Done! Restart your terminal (ghostty) to apply all changes."
+echo ""
+echo "PowerShell: add this to your profile (\$PROFILE):"
+echo "  Invoke-Expression (&starship init powershell)"

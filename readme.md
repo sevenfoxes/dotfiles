@@ -1,28 +1,56 @@
-# Dotfiles v2
-## VER: Ubuntu WSL One step install
+# Dotfiles
 
-Install and run one of these fonts and set it as the default in windows terminal. Fira is recommended.
-[nerdFont downloads](https://www.nerdfonts.com/font-downloads)
+Cross-shell setup using **starship** (prompt) + **ghostty/winghostty** (terminal).
+Works in zsh, bash, and PowerShell.
 
-### OPTIONAL: set colors in shell with ghostwheel-classic.ts
-### OPTIONAL: install x window server: `https://sourceforge.net/projects/vcxsrv/`
+## Prerequisites
 
-start x-server: windows run > `C:\Program Files\VcXsrv\xlaunch.exe -run config.xlaunch` to start without configuration
+Install a [Nerd Font](https://www.nerdfonts.com/font-downloads) and set it as your terminal font. FiraCode is recommended (the install scripts grab it automatically on Linux).
 
-# Install
+## Linux / macOS
 
+```bash
+cd ~ && git clone https://github.com/sevenfoxes/dotfiles
+# Edit dotfiles/.gitconfig with your name and email
+cd dotfiles && ./install.sh
+```
 
-`sudo apt upgrade`
+Installs: ghostty, starship, zsh, nvm, Node LTS, Claude Code, FiraCode Nerd Font.
 
-`sudo apt update`
+## Windows
 
-> [reload session]
+```powershell
+git clone https://github.com/sevenfoxes/dotfiles
+# Edit dotfiles/.gitconfig with your name and email
+cd dotfiles && .\install.ps1  # run as administrator
+```
 
-`cd ~ && git clone https://github.com/sevenfoxes/dotfiles`
+Installs: winghostty, starship, nvm for windows, git, Node LTS, Claude Code.
 
-`code ./dotfiles`
+> **TODO (test Monday):** The winghostty config path is assumed to be `%APPDATA%\ghostty\config`
+> but this hasn't been verified yet. Run `winghostty --config-path` on first launch to confirm,
+> then update the symlink in `install.ps1` if the path is different.
 
-> edit `dotfiles/.gitconfig` with your username and email. optionally add/delete any config files you don't want to overwrite
+## Keybindings (ghostty / winghostty)
 
-`cd ~ && ./dotfiles/install.sh`
+Leader key: `ctrl+space`
 
+| Chord | Action |
+|---|---|
+| `ctrl+space > \|` | split right |
+| `ctrl+space > -` | split down |
+| `ctrl+space > h/j/k/l` | navigate splits |
+| `ctrl+space > z` | zoom pane |
+| `ctrl+space > c` | new tab |
+| `ctrl+space > n / p` | next / prev tab |
+| `ctrl+space > 1-9` | jump to tab |
+| `ctrl+space > r` | reload config |
+| `ctrl+space > ctrl+space` | pass ctrl+space through |
+
+## PowerShell
+
+Starship is wired up by `install.ps1`. If you need to add it manually:
+
+```powershell
+Add-Content $PROFILE "`nInvoke-Expression (&starship init powershell)"
+```
