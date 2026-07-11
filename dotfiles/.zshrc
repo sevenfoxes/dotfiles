@@ -27,3 +27,6 @@ antigen bundle tmux
 antigen bundle laggardkernel/zsh-thefuck
 antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen apply
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
