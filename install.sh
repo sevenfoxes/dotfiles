@@ -3,30 +3,67 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+IS_STEAM_DECK=false
+if grep -qi "steamos" /etc/os-release 2>/dev/null; then
+  IS_STEAM_DECK=true
+fi
+
 install_packages() {
   if command -v apt &>/dev/null; then
     sudo apt install -y "$@"
   elif command -v dnf &>/dev/null; then
-    sudo dnf install -y "$@"
+    sudo dnf install -y --skip-unavailable "$@"
+  elif command -v pacman &>/dev/null; then
+    sudo pacman -S --needed --noconfirm "$@"
   else
-    echo "Error: No supported package manager found (apt or dnf)" >&2
+    echo "Error: No supported package manager found (apt, dnf, or pacman)" >&2
     exit 1
   fi
 }
 
+if $IS_STEAM_DECK; then
+  echo "Steam Deck detected — disabling read-only filesystem..."
+  sudo steamos-readonly disable
+fi
+
 echo "Installing binaries..."
-binaries=(
-  curl
-  unzip
-  fontconfig
-  zsh
-  git-gui
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  ghostty
-)
+if command -v pacman &>/dev/null; then
+  binaries=(
+    curl
+    unzip
+    fontconfig
+    zsh
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  )
+else
+  binaries=(
+    curl
+    unzip
+    fontconfig
+    zsh
+    git-gui
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  )
+fi
 
 install_packages "${binaries[@]}"
+
+echo "Installing ghostty..."
+if ! command -v ghostty &>/dev/null; then
+  if command -v pacman &>/dev/null; then
+    echo "  ghostty is not in Arch official repos — install manually via AUR (e.g. yay -S ghostty), skipping"
+  elif command -v dnf &>/dev/null; then
+    sudo dnf copr enable -y scottames/ghostty
+    sudo dnf install -y ghostty
+  else
+    sudo apt install -y ghostty
+  fi
+else
+  echo "  already installed, skipping"
+fi
 
 echo "Symlinking dotfiles..."
 for file in "$SCRIPT_DIR"/dotfiles/.*; do

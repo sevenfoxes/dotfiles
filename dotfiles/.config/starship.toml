@@ -46,7 +46,7 @@ diverged = "[⇕](bold yellow)"
 conflicted = "[⚡](bold red)"
 deleted = "[✘](bold red)"
 stashed = "[≡](bold blue)"
-format = "([$all_status$ahead_behind] )"
+format = "([$all_status$ahead_behind]($style) )"
 
 # git config user.initials — matches the old custom_ssh segment
 [custom.git_user]

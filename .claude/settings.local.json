@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:www.winghostty.com)"
+      "WebFetch(domain:www.winghostty.com)",
+      "WebFetch(domain:copr.fedorainfracloud.org)",
+      "WebFetch(domain:ghostty.org)"
     ]
   }
 }
