@@ -51,20 +51,6 @@ fi
 
 install_packages "${binaries[@]}"
 
-echo "Installing ghostty..."
-if ! command -v ghostty &>/dev/null; then
-  if command -v pacman &>/dev/null; then
-    echo "  ghostty is not in Arch official repos — install manually via AUR (e.g. yay -S ghostty), skipping"
-  elif command -v dnf &>/dev/null; then
-    sudo dnf copr enable -y scottames/ghostty
-    sudo dnf install -y ghostty
-  else
-    sudo apt install -y ghostty
-  fi
-else
-  echo "  already installed, skipping"
-fi
-
 echo "Symlinking dotfiles..."
 for file in "$SCRIPT_DIR"/dotfiles/.*; do
   name="$(basename "$file")"
@@ -148,7 +134,7 @@ else
 fi
 
 echo ""
-echo "Done! Restart your terminal (ghostty) to apply all changes."
+echo "Done! Restart your terminal to apply all changes."
 echo ""
 echo "PowerShell: add this to your profile (\$PROFILE):"
 echo "  Invoke-Expression (&starship init powershell)"

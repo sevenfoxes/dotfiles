@@ -1,6 +1,6 @@
 # Dotfiles
 
-Cross-shell setup using **starship** (prompt) + **ghostty/winghostty** (terminal).
+Cross-shell setup using **starship** (prompt) + **tmux** (terminal multiplexer).
 Works in zsh, bash, and PowerShell.
 
 ## Prerequisites
@@ -15,7 +15,7 @@ cd ~ && git clone https://github.com/sevenfoxes/dotfiles
 cd dotfiles && ./install.sh
 ```
 
-Installs: ghostty, starship, zsh, nvm, Node LTS, Claude Code, FiraCode Nerd Font.
+Installs: starship, zsh, nvm, Node LTS, Claude Code, FiraCode Nerd Font.
 
 ## Windows
 
@@ -25,27 +25,7 @@ git clone https://github.com/sevenfoxes/dotfiles
 cd dotfiles && .\install.ps1  # run as administrator
 ```
 
-Installs: winghostty, starship, nvm for windows, git, Node LTS, Claude Code.
-
-> **TODO (test Monday):** The winghostty config path is assumed to be `%APPDATA%\ghostty\config`
-> but this hasn't been verified yet. Run `winghostty --config-path` on first launch to confirm,
-> then update the symlink in `install.ps1` if the path is different.
-
-## Keybindings (ghostty / winghostty)
-
-Leader key: `ctrl+space`
-
-| Chord | Action |
-|---|---|
-| `ctrl+space > \|` | split right |
-| `ctrl+space > -` | split down |
-| `ctrl+space > h/j/k/l` | navigate splits |
-| `ctrl+space > z` | zoom pane |
-| `ctrl+space > c` | new tab |
-| `ctrl+space > n / p` | next / prev tab |
-| `ctrl+space > 1-9` | jump to tab |
-| `ctrl+space > r` | reload config |
-| `ctrl+space > ctrl+space` | pass ctrl+space through |
+Installs: starship, nvm for windows, git, Node LTS, Claude Code.
 
 ## PowerShell
 

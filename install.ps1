@@ -25,7 +25,6 @@ function New-Symlink {
 }
 
 Write-Host "Installing packages..."
-Install-WingetPackage "AmanThanvi.winghostty"          "winghostty"
 Install-WingetPackage "Starship.Starship"               "starship"
 Install-WingetPackage "CoreyButler.NVMforWindows"       "nvm for windows"
 Install-WingetPackage "Git.Git"                         "git"
@@ -54,13 +53,6 @@ $starshipTarget = "$ScriptDir\dotfiles\.config\starship.toml"
 New-Symlink -Target $starshipTarget -Link "$env:USERPROFILE\.config\starship.toml"
 Write-Host "  starship.toml -> ~/.config/starship.toml"
 
-# winghostty config
-# NOTE: verify this path when testing on Monday — winghostty may use a different
-# location (e.g. %LOCALAPPDATA%\ghostty\config). Check: winghostty --config-path
-$ghosttyTarget = "$ScriptDir\dotfiles\.config\ghostty\config"
-New-Symlink -Target $ghosttyTarget -Link "$env:APPDATA\ghostty\config"
-Write-Host "  ghostty/config -> %APPDATA%\ghostty\config"
-
 # Git config
 New-Symlink -Target "$ScriptDir\dotfiles\.gitconfig" -Link "$env:USERPROFILE\.gitconfig"
 Write-Host "  .gitconfig -> ~/.gitconfig"
@@ -77,9 +69,8 @@ if (!(Test-Path $PROFILE) -or !(Select-String -Path $PROFILE -Pattern "starship 
 }
 
 Write-Host ""
-Write-Host "Done! Open winghostty to get started."
+Write-Host "Done!"
 Write-Host ""
 Write-Host "FIRST RUN CHECKLIST:"
-Write-Host "  1. Verify winghostty config path (run: winghostty --config-path or check docs)"
-Write-Host "  2. Install FiraCode Nerd Font manually from nerdfonts.com and set in winghostty"
-Write-Host "  3. Run: nvm install lts && nvm use lts  (if nvm wasn't on PATH yet)"
+Write-Host "  1. Install FiraCode Nerd Font manually from nerdfonts.com and set it in your terminal"
+Write-Host "  2. Run: nvm install lts && nvm use lts  (if nvm wasn't on PATH yet)"
