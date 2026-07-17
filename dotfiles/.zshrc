@@ -12,6 +12,7 @@ fi
 ########################
 source ~/antigen.zsh
 
+antigen use oh-my-zsh
 antigen bundle brew
 antigen bundle common-aliases
 antigen bundle docker
@@ -23,6 +24,7 @@ antigen bundle nvm
 antigen bundle lukechilds/zsh-nvm
 antigen bundle python
 antigen bundle tmux
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
@@ -42,11 +44,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 
-# System plugins (installed via package manager)
-[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ########################
 # PATH
