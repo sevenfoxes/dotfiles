@@ -23,6 +23,7 @@ antigen bundle nvm
 antigen bundle lukechilds/zsh-nvm
 antigen bundle python
 antigen bundle tmux
+antigen bundle zsh-users/zsh-history-substring-search
 antigen apply
 
 ########################
@@ -62,6 +63,11 @@ if [ -f "/home/neshams/.config/lean-ctx/shell-hook.zsh" ]; then
 . "/home/neshams/.config/lean-ctx/shell-hook.zsh"
 fi
 # lean-ctx shell hook — end
+# >>> lean-ctx proxy env >>>
+# ANTHROPIC_BASE_URL omitted: Claude Pro/Max subscription authenticates against api.anthropic.com directly (set ANTHROPIC_API_KEY to route Claude through the proxy)
+export OPENAI_BASE_URL="http://127.0.0.1:4444/v1"
+export GEMINI_API_BASE_URL="http://127.0.0.1:4444"
+# <<< lean-ctx proxy env <<<
 
 # >>> lean-ctx agent aliases >>>
 alias claude='LEAN_CTX_AGENT=1 BASH_ENV="$HOME/.bashenv" claude'
@@ -69,10 +75,3 @@ alias codebuddy='LEAN_CTX_AGENT=1 BASH_ENV="$HOME/.bashenv" codebuddy'
 alias codex='LEAN_CTX_AGENT=1 BASH_ENV="$HOME/.bashenv" codex'
 alias gemini='LEAN_CTX_AGENT=1 BASH_ENV="$HOME/.bashenv" gemini'
 # <<< lean-ctx agent aliases <<<
-
-# >>> lean-ctx proxy env >>>
-# ANTHROPIC_BASE_URL omitted: Claude Pro/Max subscription authenticates against api.anthropic.com directly (set ANTHROPIC_API_KEY to route Claude through the proxy)
-export OPENAI_BASE_URL="http://127.0.0.1:4444/v1"
-export GEMINI_API_BASE_URL="http://127.0.0.1:4444"
-# <<< lean-ctx proxy env <<<
-
